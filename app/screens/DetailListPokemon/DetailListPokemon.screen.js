@@ -93,16 +93,12 @@ const DetailListPokemon = ({
       </TouchableOpacity>
     </View>
   );
-  const ItemSeparatorComponent = () => {
-    return <View style={styles.seperator} />;
-  };
-  const ListEmptyComponent = () => {
-    return (
-      <View>
-        <Text>Pokemon tidak ditemukan</Text>
-      </View>
-    );
-  };
+  const ItemSeparatorComponent = () => <View style={styles.seperator} />;
+  const ListEmptyComponent = () => (
+    <View>
+      <Text>Pokemon tidak ditemukan</Text>
+    </View>
+  );
   const ListFooterComponent = () => {
     if (loadingPaging) {
       return (
@@ -113,20 +109,18 @@ const DetailListPokemon = ({
     }
     return <View />;
   };
-  const renderItem = ({item}) => {
-    return (
-      <PokemonCardHorizontal
-        item={item}
-        onPress={onPressItem({
-          id: item.id,
-          speciesName: get(item, 'species.name', ''),
-        })}
-      />
-    );
-  };
+  const renderItem = ({item}) => (
+    <PokemonCardHorizontal
+      item={item}
+      onPress={onPressItem({
+        id: item.id,
+        speciesName: get(item, 'species.name', ''),
+      })}
+    />
+  );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="DetailListPokemon.screen">
       <ListHeaderComponent />
       {loading ? (
         <View style={styles.containerLoading}>
