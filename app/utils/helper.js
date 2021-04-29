@@ -9,3 +9,10 @@ const BASE_WIDTH = 375;
 
 export const horizontalScale = size => (SCREEN_WIDTH / BASE_WIDTH) * size;
 export const verticalScale = size => (SCREEN_HEIGHT / BASE_HEIGHT) * size;
+export const toTitleCase = string => {
+  if (typeof string !== 'string') {
+    return false;
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
