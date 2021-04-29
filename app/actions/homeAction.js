@@ -1,45 +1,71 @@
-// import get from 'lodash/get';
-
 import {
   GET_LIST_POKEMON,
   GET_LIST_POKEMON_SUCCESS,
   GET_LIST_POKEMON_FAILED,
+  GET_TYPE_POKEMON,
+  GET_TYPE_POKEMON_SUCCESS,
+  GET_TYPE_POKEMON_FAILED,
 } from './actionType';
 import axios from '../utils/axios';
-// import { ERROR_CODE } from '../utils/constants';
-// import { queryObjectToString } from '../utils/helper';
-
-export const requestListPokemon = dispatch => {
-  const callback = async (resolve, reject) => {
-    dispatch({
-      type: GET_LIST_POKEMON,
-    });
-
-    try {
-      const {data} = await axios.get('pokemon?limit=10&offset=0');
-      const listOfPokemon = [];
-
-      for (let i = 0; i < data.results.length; i++) {
-        const element = data.results[i];
-        const pokemon = await requestDetailPokemon(element);
-        listOfPokemon.push(pokemon);
-      }
-    } catch (error) {
-      // console.log(error);
-      // console.log(error.response);
-      // error.response.data
-    }
-  };
-  return new Promise(callback);
-};
 
 const requestDetailPokemon = ({name}) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const {data} = await axios.get(`pokemon/${name}`);
-      resolve(data);
+      const [detail, species] = await Promise.all([
+        axios.get(`/pokemon/${name}`),
+        axios.get(`/pokemon-species/${name}`),
+      ]);
+      resolve({...detail.data, ...species.data});
     } catch (error) {
       reject(error);
     }
   });
+};
+
+export const requestListPokemon = async dispatch => {
+  dispatch({
+    type: GET_LIST_POKEMON,
+  });
+
+  try {
+    const {data} = await axios.get('/pokemon?limit=5&offset=0');
+    const promiseListOfPokemon = [];
+
+    for (let i = 0; i < data.results.length; i++) {
+      const element = data.results[i];
+      const pokemon = requestDetailPokemon(element);
+      promiseListOfPokemon.push(pokemon);
+    }
+
+    const listOfPokemon = await Promise.all(promiseListOfPokemon);
+
+    dispatch({
+      type: GET_LIST_POKEMON_SUCCESS,
+      payload: listOfPokemon,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_LIST_POKEMON_FAILED,
+      error: error.response,
+    });
+  }
+};
+
+export const requstTypePokemon = async dispatch => {
+  dispatch({
+    type: GET_TYPE_POKEMON,
+  });
+
+  try {
+    const {data} = await axios.get('/type');
+    dispatch({
+      type: GET_TYPE_POKEMON_SUCCESS,
+      payload: data.results,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TYPE_POKEMON_FAILED,
+      error: error.response,
+    });
+  }
 };

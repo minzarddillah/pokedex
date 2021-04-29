@@ -6,8 +6,8 @@ import {SCREEN_WIDTH, verticalScale} from '../../utils/helper';
 const styles = StyleSheet.create({
   containerBanner: {
     width: '100%',
+    height: verticalScale(230),
     maxHeight: verticalScale(230),
-    flex: 1,
   },
   paginationStyle: {
     bottom: 0,
@@ -28,13 +28,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 4,
   },
-  copntainerImage: {
-    flex: 1,
+  containerImage: {
     padding: 20,
     width: SCREEN_WIDTH,
   },
   image: {
-    flex: 1,
+    height: '100%',
     width: '100%',
     borderRadius: 20,
     alignItems: 'center',

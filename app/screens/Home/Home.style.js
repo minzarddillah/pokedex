@@ -5,6 +5,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.White,
+    paddingBottom: 20,
+  },
+  containerSearch: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
 });
 

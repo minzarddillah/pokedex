@@ -2,6 +2,7 @@ import React from 'react';
 import {Linking, TouchableWithoutFeedback, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import Image from 'react-native-fast-image';
+import PropTypes from 'prop-types';
 
 import {verticalScale} from '../../utils/helper';
 import styles from './Banner.style';
@@ -21,7 +22,7 @@ const Banner = ({data}) => {
           <TouchableWithoutFeedback
             onPress={onPressBanner(dataBanner.url)}
             key={index}>
-            <View style={styles.copntainerImage}>
+            <View style={styles.containerImage}>
               <Image
                 resizeMode="cover"
                 source={{uri: dataBanner.imageUrl}}
@@ -33,6 +34,14 @@ const Banner = ({data}) => {
       </Swiper>
     </View>
   );
+};
+
+Banner.defaultProps = {
+  data: [],
+};
+
+Banner.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Banner;
