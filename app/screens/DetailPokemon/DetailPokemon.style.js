@@ -75,6 +75,9 @@ const styles = StyleSheet.create({
   containerListCompare: {
     padding: 20,
   },
+  contentContainerListPokedex: {
+    paddingBottom: 20,
+  },
 });
 
 export default styles;

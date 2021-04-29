@@ -10,4 +10,5 @@ export default {
   Black: '#000',
   SanMarino: '#3C5AA6',
   Scorpion: '#575757',
+  Gray: '#808080',
 };

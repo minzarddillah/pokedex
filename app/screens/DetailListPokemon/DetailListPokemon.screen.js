@@ -107,7 +107,7 @@ const DetailListPokemon = ({
     if (loadingPaging) {
       return (
         <View style={styles.containerLoading}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color={color.Gray} />
         </View>
       );
     }
@@ -130,7 +130,7 @@ const DetailListPokemon = ({
       <ListHeaderComponent />
       {loading ? (
         <View style={styles.containerLoading}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color={color.Gray} />
         </View>
       ) : (
         <FlatList

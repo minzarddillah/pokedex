@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Platform} from 'react-native';
 import Image from 'react-native-fast-image';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
@@ -19,7 +19,9 @@ const PokemonCard = ({data}) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressCard}>
+    <TouchableOpacity
+      style={[styles.container, Platform.OS === 'android' ? styles.shadow : {}]}
+      onPress={onPressCard}>
       <Image
         resizeMode="contain"
         source={{

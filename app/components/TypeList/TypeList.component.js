@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
+import {View, ScrollView, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 
 import styles from './TypeList.style';
 import TypePokemon from '../TypePokemon/TypePokemon.component';
 import TitleList from '../TitleList/TitleList.component';
+import color from '../../utils/color';
 
 const TypeList = ({data, loading}) => {
   const [types, setTypes] = useState([], []);
@@ -27,7 +28,11 @@ const TypeList = ({data, loading}) => {
     <View style={styles.container}>
       <TitleList title="Tipe Pokemon" disabled={true} />
       {loading ? (
-        <ActivityIndicator size="large" style={styles.loading} />
+        <ActivityIndicator
+          size="large"
+          style={styles.loading}
+          color={color.Gray}
+        />
       ) : (
         <ScrollView
           horizontal

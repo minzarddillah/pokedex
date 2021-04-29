@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingHorizontal: 10,
     paddingBottom: 20,
+  },
+  shadow: {
     shadowColor: color.Black,
     shadowOffset: {
       width: 0,

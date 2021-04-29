@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
@@ -18,6 +19,7 @@ import TabView from '../../components/TabView/TabView.component';
 import Stat from '../../components/Stat/Stat.component';
 import Modal from '../../components/Modal/Modal.component';
 import PokemonCardHorizontal from '../../components/PokemonCardHorizontal/PokemonCardHorizontal.component';
+import color from '../../utils/color';
 
 const DetailPokemon = ({
   data,
@@ -71,13 +73,13 @@ const DetailPokemon = ({
 
     while (hp[0] > 0 || hp[1] > 0) {
       const damageFirstPokemon =
-        (data[0].stats.find(v => v.stat.name === 'attack')?.base_stat -
-          data[1].stats.find(v => v.stat.name === 'defense')?.base_stat) *
-        2;
+        (data[0].stats.find(v => v.stat.name === 'attack')?.base_stat * 2 -
+          data[1].stats.find(v => v.stat.name === 'defense')?.base_stat) /
+        3;
       const damageSecondPokemon =
-        (data[1].stats.find(v => v.stat.name === 'attack')?.base_stat -
-          data[0].stats.find(v => v.stat.name === 'defense')?.base_stat) *
-        2;
+        (data[1].stats.find(v => v.stat.name === 'attack')?.base_stat * 2 -
+          data[0].stats.find(v => v.stat.name === 'defense')?.base_stat) /
+        3;
 
       hp[1] = hp[1] - damageFirstPokemon;
       if (hp[1] <= 0) {
@@ -219,6 +221,17 @@ const DetailPokemon = ({
     <PokemonCardHorizontal item={item} onPress={comparePokemon(item)} />
   );
 
+  const renderFooterListCompare = () => {
+    if (loadingPagingPokedex) {
+      return (
+        <View>
+          <ActivityIndicator size="large" color={color.Gray} />
+        </View>
+      );
+    }
+    return <View />;
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -244,12 +257,14 @@ const DetailPokemon = ({
 
       <Modal show={showModal} setShow={setShowModal} title="CANCEL">
         <FlatList
-          data={pokedex.filter(poke => poke.id !== data[0].id)}
+          data={pokedex.filter(poke => poke.id !== data[0]?.id)}
           renderItem={renderListCompare}
           keyExtractor={keyExtractor}
           style={styles.containerListCompare}
+          contentContainerStyle={styles.contentContainerListPokedex}
           onEndReachedThreshold={0.2}
           onEndReached={onEndReached}
+          ListFooterComponent={renderFooterListCompare}
         />
       </Modal>
     </View>
